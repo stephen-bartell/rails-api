@@ -11,12 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404000841) do
+ActiveRecord::Schema.define(version: 20150405220302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "teams", force: :cascade do |t|
+  create_table "players", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "team_id"
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_salt"
+    t.string   "password_hash"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "scrums", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "team_id"
+    t.uuid     "player_id"
+    t.date     "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
+  create_table "teams", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

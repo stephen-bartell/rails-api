@@ -1,3 +1,4 @@
+ruby '2.2.1'
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
@@ -6,9 +7,13 @@ gem 'rails-api'
 
 gem 'spring', :group => :development
 
+gem 'activerecord-session_store'
+
 gem 'pg'
 
 gem 'active_model_serializers'
+
+gem "bcrypt-ruby", :require => "bcrypt"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
