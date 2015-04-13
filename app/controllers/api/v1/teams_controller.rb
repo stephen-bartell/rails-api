@@ -6,8 +6,10 @@ module Api
     end
 
     def create
-      puts "========================================"
+      puts "params ========================================"
       puts params
+
+      puts "team_params ========================================"
       puts team_params
       
       @team = Team.new(team_params)
