@@ -3,6 +3,7 @@ class CreateTeams < ActiveRecord::Migration
     
     create_table :teams, id: :uuid do |t|
       t.string :name
+      t.string :slack_id
       t.timestamps null: false
     end
     

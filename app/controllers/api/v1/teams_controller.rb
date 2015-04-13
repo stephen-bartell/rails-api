@@ -5,7 +5,20 @@ module Api
       render json: Team.all
     end
 
-    def show
+    def create
+      @team = Team.new(team_params)
+
+      if @team.save
+        render json: @team
+      else
+        render json: { errors: []}
+      end
+    end
+
+    private
+
+    def team_params
+      params.require(:team).permit(:slack_id, :name)
     end
 
   end

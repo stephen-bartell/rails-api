@@ -11,7 +11,7 @@ module Api
     end
 
     def create
-      puts "player_params ========================"
+     puts "player_params ========================"
       puts player_params 
 
       @player = Player.new(player_params)

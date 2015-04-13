@@ -3,6 +3,7 @@ class CreatePlayers < ActiveRecord::Migration
     
     create_table :players, id: :uuid do |t|
       t.uuid :team_id
+      t.string :slack_id
       t.string :name
       t.string :email
       t.string :password_salt
