@@ -23,7 +23,7 @@ module Api
     private
 
     def player_params
-      params.require(:player).permit(:email, :mention_name, :real_name :password)
+      params.require(:player).permit(:email, :mention_name, :real_name, :password)
     end
 
   end
