@@ -1,7 +1,7 @@
-class CreateTasks < ActiveRecord::Migration
+class CreateEntries < ActiveRecord::Migration
   def change
     
-    create_table :tasks, id: :uuid do |t|
+    create_table :entries, id: :uuid do |t|
       t.uuid :team_id
       t.uuid :player_id
       t.date :date

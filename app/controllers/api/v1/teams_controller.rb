@@ -1,17 +1,12 @@
 module Api
   class V1::TeamsController < ApplicationController
 
-    def index
-      render json: Team.all
+    def show
+      @team = Team.find_by_id(params[:id])
+      render json: @team
     end
-
+    
     def create
-      puts "params ========================================"
-      puts params
-
-      puts "team_params ========================================"
-      puts team_params
-      
       @team = Team.new(team_params)
 
       if @team.save

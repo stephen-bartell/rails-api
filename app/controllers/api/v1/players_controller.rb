@@ -11,9 +11,6 @@ module Api
     end
 
     def create
-     puts "player_params ========================"
-      puts player_params 
-
       @player = Player.new(player_params)
 
       if @player.save
@@ -26,7 +23,7 @@ module Api
     private
 
     def player_params
-      params.require(:player).permit(:email, :password)
+      params.require(:player).permit(:email, :mention_name, :real_name :password)
     end
 
   end
