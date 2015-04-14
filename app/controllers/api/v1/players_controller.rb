@@ -71,7 +71,7 @@ module Api
       if @player.save
         render json: @player
       else
-        render json: { errors: []}
+        render json: { errors: @player.errors.messages }
       end
     end
 
