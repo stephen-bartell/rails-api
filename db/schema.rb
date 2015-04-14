@@ -35,8 +35,9 @@ ActiveRecord::Schema.define(version: 20150405220302) do
     t.string   "email"
     t.string   "password_salt"
     t.string   "password_hash"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "points",        default: 0
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "scrums", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

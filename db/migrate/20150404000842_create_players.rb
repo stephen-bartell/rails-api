@@ -11,6 +11,8 @@ class CreatePlayers < ActiveRecord::Migration
       t.string :password_salt
       t.string :password_hash
 
+      t.integer :points, default: 0
+
       t.timestamps null: false
     end
 
