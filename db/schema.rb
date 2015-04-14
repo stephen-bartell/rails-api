@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150405220302) do
   create_table "players", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "team_id"
     t.string   "slack_id"
-    t.string   "mention_name"
+    t.string   "name"
     t.string   "real_name"
     t.string   "email"
     t.string   "password_salt"

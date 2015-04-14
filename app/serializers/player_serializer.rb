@@ -1,6 +1,11 @@
 class PlayerSerializer < ActiveModel::Serializer
-  
-  attributes :id, 
-    :email
+
+  attributes :id,
+    :slack_id,
+    :name,
+    :real_name,
+    :email,
+    :points
+
 
 end

@@ -5,7 +5,7 @@ module Api
       @team = Team.find_by_id(params[:id])
       render json: @team
     end
-    
+
     def create
       @team = Team.new(team_params)
 
