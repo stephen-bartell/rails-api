@@ -2,7 +2,7 @@ module Api
   class V1::EntriesController < ApplicationController
 
 =begin
-@api {post} /entries Create a entry
+@api {post} /entries Create a scrum entry
 @apiParam {String} category
 @apiParam {String} body
 @apiSuccess (Response) {String} id A uuid for this resource

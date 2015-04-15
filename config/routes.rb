@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     scope module: 'api' do
       namespace :v1 do
 
-        resources :teams
+        resource :team
         resources :players
         resources :entries
         resources :scrums

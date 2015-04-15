@@ -23,7 +23,7 @@ module Api
   }
 @apiName GetScrum
 @apiGroup Scrum
-@apiParam {String} id String unique ID.
+@apiParam {String} id String unique ID
 =end
     def show
       @scrum = Scrum.find_by_id params[:id]

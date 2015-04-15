@@ -10,7 +10,7 @@ module Api
 @apiSuccess (Response) {String} real_name The full name for this player
 @apiSuccess (Response) {String} email The players email address
 @apiSuccess (Response) {String} slack_id The unique `slack_id` for the player
-@apiSuccess (Response) {Integer} points The total point earnings for this player for the current season.
+@apiSuccess (Response) {Integer} points The total point earnings for this player for the current season
 @apiSuccessExample {json} Success-Response:
   HTTP/1.1 200 OK
   {
@@ -41,7 +41,7 @@ module Api
     end
 
 =begin
-@api {get} /players/:id Get a specific player
+@api {get} /players/:id Get a player
 @apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
 @apiDescription This will return a specific player on your team. You can only see players that are on your team (in the same account)
 @apiSuccess (Response) {String} id A uuid for this resource

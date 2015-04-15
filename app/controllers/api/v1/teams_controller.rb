@@ -1,6 +1,8 @@
 module Api
   class V1::TeamsController < ApplicationController
 
+    skip_filter :authenticate!, only: [ :create ]
+
 =begin
 @api {get} /team Get your team
 @apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
@@ -21,11 +23,11 @@ module Api
   }
 @apiName GetTeam
 @apiGroup Team
-@apiParam {String} id String unique ID.
+@apiParam {String} id String unique ID
 =end
     def show
-      @team = Team.find_by_id params[:id]
-      render json: @team
+      puts current_team.to_json
+      render json: current_team
     end
 
 =begin
