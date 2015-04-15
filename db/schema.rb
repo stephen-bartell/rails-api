@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(version: 20150405220302) do
   create_table "entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "team_id"
     t.uuid     "player_id"
-    t.date     "date"
+    t.uuid     "scrum_id"
     t.string   "category"
     t.text     "body"
+    t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20150405220302) do
     t.uuid     "team_id"
     t.uuid     "player_id"
     t.date     "date"
+    t.integer  "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -60,9 +62,11 @@ ActiveRecord::Schema.define(version: 20150405220302) do
 
   create_table "teams", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
+    t.string   "auth_token"
+    t.integer  "points",     default: 0
     t.string   "slack_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
