@@ -7,42 +7,48 @@ module Api
 @api {get} /team Get your team
 @apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
 @apiDescription This will return all the details about your team
-@apiSuccess (Response) {String} id A uuid for this resource
-@apiSuccess (Response) {String} slack_id The `slack_id` for this team (a uuid for slack)
-@apiSuccess (Response) {String} name The team name in Slack
-@apiSuccess (Response) {Integer} points The total point earnings for this team for the current season
+@apiSuccess (200 Response) {String} id A uuid for this resource
+@apiSuccess (200 Response) {String} slack_id The `slack_id` for this team (a uuid for slack)
+@apiSuccess (200 Response) {String} name The team name in Slack
+@apiSuccess (200 Response) {Integer} points The total point earnings for this team for the current season
 @apiSuccessExample {json} Success-Response:
-  HTTP/1.1 200 OK
-  {
-    "team": {
-      "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
-      "name": "astroscrum",
-      "points": 0,
-      "slack_id": "U0485M91U"
-    }
+HTTP/1.1 200 OK
+{
+  "team": {
+    "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
+    "name": "companyname",
+    "points": 0,
+    "slack_id": "U0485M91U"
   }
+}
 @apiName GetTeam
 @apiGroup Team
 =end
     def show
       puts current_team.to_json
-      render json: current_team
+      render json: current_team, include: [ 'players' ]
     end
 
 =begin
 @api {post} /teams Create a team
+@apiSuccess (200 Response) {String} auth_token The `auth_token`, you'll be required to send with all other requests
 @apiParam {String} name The team name in Slack
 @apiParam {String} slack_id The `slack_id` of the team
-@apiSuccessExample {json} Success-Response:
-  HTTP/1.1 200 OK
-  {
-    "team": {
-      "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
-      "name": "companyname",
-      "points": 0,
-      "slack_id": "U0485M91U"
-    }
+@apiExample {json} Example-Request:
+POST /v1/team HTTP/1.1
+{
+  "team": {
+     "name": "Astroscrum"
   }
+}
+
+@apiSuccessExample {json} Success-Response:
+HTTP/1.1 200 OK
+{
+  "team": {
+    "auth_token": "c25a1f20b3af295280024c991a205482",
+  }
+}
 
 @apiName CreateTeam
 @apiGroup Team
@@ -51,7 +57,11 @@ module Api
       @team = Team.new(team_params)
 
       if @team.save
-        render json: @team
+        render json: {
+          team: {
+            auth_token: @team.auth_token
+          }
+        }
       else
         render json: { errors: @team.errors.messages }
       end

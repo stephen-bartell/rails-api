@@ -1,8 +1,8 @@
 class TeamSerializer < ActiveModel::Serializer
 
-  attributes :id, :name, :auth_token
+  attributes :id, :name, :points, :slack_id
 
-  has_many :players
-  has_many :scrums
+  # has_many :players
+  # has_many :scrums
 
 end

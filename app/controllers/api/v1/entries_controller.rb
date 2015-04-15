@@ -11,21 +11,21 @@ module Api
 @apiSuccess (Response) {String} body The task related to the category
 @apiSuccess (Response) {Points} points How many points earned by the Player for this task
 @apiSuccessExample {json} Success-Response:
-  HTTP/1.1 200 OK
-  {
-    "entry": {
-      "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
-      "category": "today",
-      "body": "I'm working on payment processing",
-      "points": 5
-    }
+HTTP/1.1 200 OK
+{
+  "entry": {
+    "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
+    "category": "today",
+    "body": "I'm working on payment processing",
+    "points": 5
   }
+}
 
 @apiName CreateEntry
 @apiGroup Entry
 =end
     def create
-      @entry = Entry.new(entry_params)
+      @entry = current_team.entries.new(entry_params)
 
       if @entry.save
         render json: @entry
