@@ -23,7 +23,6 @@ module Api
   }
 @apiName GetTeam
 @apiGroup Team
-@apiParam {String} id String unique ID
 =end
     def show
       puts current_team.to_json

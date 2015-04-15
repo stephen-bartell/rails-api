@@ -73,6 +73,7 @@ module Api
 
 =begin
 @api {post} /players Create a player
+@apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
 @apiParam {String} password Password
 @apiParam {String} name Short name or chat mention name
 @apiParam {String} email Email address for player

@@ -5,6 +5,7 @@ module Api
 @api {post} /entries Create a scrum entry
 @apiParam {String} category
 @apiParam {String} body
+@apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
 @apiSuccess (Response) {String} id A uuid for this resource
 @apiSuccess (Response) {String} category Category for scrum key, e.g. today, yesterday, or blocker
 @apiSuccess (Response) {String} body The task related to the category
