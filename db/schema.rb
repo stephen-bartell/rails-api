@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405220302) do
+ActiveRecord::Schema.define(version: 20150405220303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,15 @@ ActiveRecord::Schema.define(version: 20150405220302) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "players_scrums", force: :cascade do |t|
+    t.uuid     "player_id"
+    t.uuid     "scrum_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "scrums", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "team_id"
-    t.uuid     "player_id"
     t.date     "date"
     t.integer  "points"
     t.datetime "created_at", null: false

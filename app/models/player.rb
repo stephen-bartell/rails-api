@@ -1,7 +1,8 @@
 class Player < ActiveRecord::Base
 
   belongs_to :team
-  has_many :scrums
+  has_many :entries
+  has_many :scrums, through: :entries
 
   attr_accessor :password
   before_save :encrypt_password
@@ -29,5 +30,11 @@ class Player < ActiveRecord::Base
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
   end
+
+  def scrum
+    team.current_scrum
+  end
+
+
 
 end

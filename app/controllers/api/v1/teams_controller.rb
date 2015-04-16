@@ -26,7 +26,7 @@ HTTP/1.1 200 OK
 =end
     def show
       puts current_team.to_json
-      render json: current_team, include: [ 'players' ]
+      render json: current_team
     end
 
 =begin

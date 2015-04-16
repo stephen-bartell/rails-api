@@ -25,7 +25,20 @@ HTTP/1.1 200 OK
 @apiGroup Entry
 =end
     def create
-      @entry = current_team.entries.new(entry_params)
+      player = current_team.players.find_by_slack_id(entry_params[:slack_id])
+
+      entry = {
+        scrum_id: current_team.current_scrum.id,
+        team_id: current_team.id,
+        player_id: player.id,
+        category: entry_params[:category],
+        body: entry_params[:body]
+      }
+
+      puts "entry ============================="
+      puts entry
+
+      @entry = Entry.new(entry)
 
       if @entry.save
         render json: @entry
@@ -37,7 +50,7 @@ HTTP/1.1 200 OK
     private
 
     def entry_params
-      params.require(:entry).permit(:category, :body)
+      params.require(:entry).permit(:slack_id, :category, :body)
     end
 
   end

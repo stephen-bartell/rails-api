@@ -3,7 +3,6 @@ class CreateScrums < ActiveRecord::Migration
 
     create_table :scrums, id: :uuid do |t|
       t.uuid :team_id
-      t.uuid :player_id
       t.date :date
       t.integer :points
 

@@ -7,8 +7,9 @@ Rails.application.routes.draw do
         resource :team
         resources :players
         resources :entries
-        resources :scrums
 
+        resource :scrum, only: [:show]
+        resources :scrums
         resources :sessions
 
       end
