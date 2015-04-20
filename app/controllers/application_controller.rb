@@ -12,9 +12,11 @@ class ApplicationController < ActionController::API
     token = params[:auth_token].presence
     team = Team.find_by_auth_token(token)
 
-    raise "Unable to authenticate request" unless team
-
     team
+
+    # TODO: this should respond with a 40x error of some kind
+
+    # raise "Unable to authenticate request" unless team
     # raise Exceptions::ApiAuthenticationError, "Unable to authenticate user" unless user
   end
 
