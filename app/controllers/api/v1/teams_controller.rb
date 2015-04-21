@@ -54,7 +54,8 @@ HTTP/1.1 200 OK
 @apiGroup Team
 =end
     def create
-      @team = Team.new(team_params)
+      @team = Team.where(slack_id: team_params[:slack_id]).first_or_initialize
+      @team.attributes = team_params
 
       if @team.save
         render json: {
