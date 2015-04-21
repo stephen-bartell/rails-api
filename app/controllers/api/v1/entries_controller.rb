@@ -34,6 +34,10 @@ HTTP/1.1 200 OK
         body: entry_params[:body]
       }
 
+      puts "==========================="
+      puts entry
+      puts "==========================="
+
       @entry = Entry.new(entry)
 
       if @entry.save
