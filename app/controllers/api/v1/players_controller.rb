@@ -113,7 +113,8 @@ HTTP/1.1 200 OK
 @apiGroup Player
 =end
     def create
-      @player = current_team.players.new(player_params)
+      @player = Player.where(slack_id: player_params[:slack_id], team_id: current_team.id).first_or_initialize
+      @player.attributes = player_params
 
       if @player.save
         render json: @player

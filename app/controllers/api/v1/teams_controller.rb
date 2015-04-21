@@ -60,7 +60,11 @@ HTTP/1.1 200 OK
       if @team.save
         render json: {
           team: {
-            auth_token: @team.auth_token
+            auth_token: @team.auth_token,
+            id: @team.id,
+            name: @team.name,
+            points: @team.points,
+            slack_id: @team.slack_id
           }
         }
       else
