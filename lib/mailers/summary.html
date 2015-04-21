@@ -1,0 +1,20 @@
+<html>
+  <p>Hey %recipient.name%, today you earned %recipient.points% points today!</p>
+
+  {{#players}}
+  <strong>{{name}}</strong> ({{points}})<br>
+    Today<br>
+    {{#entries}}
+      {{#today}}
+       - {{body}}<br>
+      {{/today}}
+    {{/entries}}
+    <br>
+
+  {{/players}}
+
+  Not filled:<br>
+
+  Overall standings:<br>
+
+</html>

@@ -1,0 +1,17 @@
+Hey %recipient.name%, today you earned %recipient.points% points today!
+
+{{#players}}
+{{name}} ({{points}})
+  Today:
+  {{#entries}}
+    {{#today}}
+      - {{body}}
+    {{/today}}
+  {{/entries}}
+
+{{/players}}
+
+Not filled:
+
+Overall standings:
+

@@ -18,14 +18,13 @@ ActiveRecord::Schema.define(version: 20150405220303) do
   enable_extension "uuid-ossp"
 
   create_table "entries", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid     "team_id"
     t.uuid     "player_id"
     t.uuid     "scrum_id"
     t.string   "category"
     t.text     "body"
-    t.integer  "points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "points",     default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "players", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -51,9 +50,9 @@ ActiveRecord::Schema.define(version: 20150405220303) do
   create_table "scrums", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "team_id"
     t.date     "date"
-    t.integer  "points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "points",     default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "sessions", force: :cascade do |t|

@@ -35,6 +35,13 @@ class Player < ActiveRecord::Base
     team.current_scrum
   end
 
+  def display_name
+    name || real_name
+  end
 
-
+  def summary
+    "<li>" +
+     "#{display_name}" +
+    "</li>"
+  end
 end

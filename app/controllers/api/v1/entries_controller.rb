@@ -29,7 +29,6 @@ HTTP/1.1 200 OK
 
       entry = {
         scrum_id: current_team.current_scrum.id,
-        team_id: current_team.id,
         player_id: player.id,
         category: entry_params[:category],
         body: entry_params[:body]

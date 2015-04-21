@@ -15,6 +15,11 @@ gem 'active_model_serializers'
 
 gem "bcrypt-ruby", :require => "bcrypt"
 
+gem 'dotenv-rails', :groups => [:development, :test]
+
+gem 'rest-client'
+gem 'mustache'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -29,6 +34,8 @@ gem "bcrypt-ruby", :require => "bcrypt"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'pry-rails', :group => :development
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'

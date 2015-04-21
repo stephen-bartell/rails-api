@@ -4,7 +4,7 @@ class CreateScrums < ActiveRecord::Migration
     create_table :scrums, id: :uuid do |t|
       t.uuid :team_id
       t.date :date
-      t.integer :points
+      t.integer :points, default: 0
 
       t.timestamps null: false
     end

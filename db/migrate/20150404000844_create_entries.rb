@@ -7,7 +7,7 @@ class CreateEntries < ActiveRecord::Migration
 
       t.string :category
       t.text :body
-      t.integer :points
+      t.integer :points, default: 0
 
       t.timestamps null: false
     end
