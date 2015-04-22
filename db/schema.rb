@@ -70,6 +70,11 @@ ActiveRecord::Schema.define(version: 20150405220303) do
     t.string   "auth_token"
     t.integer  "points",     default: 0
     t.string   "slack_id"
+    t.string   "bot_url"
+    t.string   "prompt_at"
+    t.string   "remind_at"
+    t.string   "summary_at"
+    t.string   "timezone"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

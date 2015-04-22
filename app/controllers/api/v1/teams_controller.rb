@@ -75,7 +75,7 @@ HTTP/1.1 200 OK
     private
 
     def team_params
-      params.require(:team).permit(:slack_id, :name)
+      params.require(:team).permit(:slack_id, :name, :prompt_at, :remind_at, :summary_at, :timezone)
     end
 
   end
