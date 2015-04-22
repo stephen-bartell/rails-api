@@ -17,6 +17,7 @@ class Scrum < ActiveRecord::Base
         email: player.email,
         slack_id: player.slack_id,
         name: player.name,
+        real_name: player.real_name,
         points: player.points,
         categories: categories.map { |k,v| { category: k, entries: v.map { |entry| entry.slice(:body, :points) } }}
       }

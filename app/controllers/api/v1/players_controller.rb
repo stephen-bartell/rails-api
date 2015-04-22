@@ -65,6 +65,8 @@ HTTP/1.1 200 OK
 =end
     def show
       @player = current_team.players.find_by_id params[:id]
+      @player = current_team.players.find_by_slack_id params[:id] unless @player
+
       render json: @player
     end
 
