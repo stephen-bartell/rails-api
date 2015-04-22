@@ -10,10 +10,7 @@ class Scrum < ActiveRecord::Base
     players.uniq.map do |player|
 
       # Group the entries by category
-      entries = player.entries.group_by { |entry| entry[:category] }
-
-      # Remove the unnecessary attribtues in the entries
-      entries = entries.map { |k, v| { k => v.map { |entry| entry.slice(:body, :points) } } }
+      categories = player.entries.group_by { |entry| entry[:category] }
 
       {
         id: player.id,
@@ -21,7 +18,7 @@ class Scrum < ActiveRecord::Base
         slack_id: player.slack_id,
         name: player.name,
         points: player.points,
-        entries: entries
+        categories: categories.map { |k,v| { category: k, entries: v.map { |entry| entry.slice(:body, :points) } }}
       }
     end
   end
