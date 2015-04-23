@@ -3,9 +3,9 @@ class ScheduleEventWorker
 
   def perform(team_id, event_name)
     return if cancelled?
-
-    puts team_id
-    puts event_name
+    console.log "---------------------------------"
+    console.log "#{team_id}, #{event_name}"
+    console.log "---------------------------------"
   end
 
   def cancelled?

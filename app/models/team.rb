@@ -19,6 +19,8 @@
 #  updated_at  :datetime         not null
 #
 
+require 'sidekiq/api'
+
 class Team < ActiveRecord::Base
 
   has_many :players
