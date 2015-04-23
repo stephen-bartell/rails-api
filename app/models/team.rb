@@ -38,7 +38,8 @@ class Team < ActiveRecord::Base
   end
 
   def send_to_slack_client(data)
-    http = Net::HTTP.new(bot_url)
+    uri = URI(bot_url)
+    http = Net::HTTP.new(bot_url.host)
     # http.use_ssl = true
 
     request = Net::HTTP::Post.new('/hubot/astroscrum/team', {'Content-Type' =>'application/json'})
