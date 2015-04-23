@@ -68,15 +68,18 @@ ActiveRecord::Schema.define(version: 20150405220303) do
   create_table "teams", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.string   "auth_token"
-    t.integer  "points",     default: 0
+    t.integer  "points",      default: 0
     t.string   "slack_id"
     t.string   "bot_url"
     t.string   "prompt_at"
+    t.string   "prompt_jid"
     t.string   "remind_at"
+    t.string   "remind_jid"
     t.string   "summary_at"
+    t.string   "summary_jid"
     t.string   "timezone"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end

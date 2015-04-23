@@ -8,9 +8,16 @@ class CreateTeams < ActiveRecord::Migration
       t.string :slack_id
 
       t.string :bot_url
+
       t.string :prompt_at
+      t.string :prompt_jid
+
       t.string :remind_at
+      t.string :remind_jid
+
       t.string :summary_at
+      t.string :summary_jid
+
       t.string :timezone
 
       t.timestamps null: false

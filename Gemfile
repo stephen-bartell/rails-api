@@ -18,7 +18,14 @@ gem "bcrypt-ruby", :require => "bcrypt"
 gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'rest-client'
+
 gem 'mustache'
+
+gem 'sidekiq'
+
+gem 'parse-cron'
+
+gem 'annotate'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
