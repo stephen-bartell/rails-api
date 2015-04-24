@@ -74,7 +74,7 @@ class Team < ActiveRecord::Base
   def next_run_for_event(event_name)
     crontab = self["#{event_name}_at"]
     cron = CronParser.new(crontab)
-    run_at = cron.next(Time.now + 10.seconds)
+    run_at = cron.next(ActiveSupport::TimeZone.new(timezone).local_to_utc(Time.now) + 10.seconds)
     ActiveSupport::TimeZone.new(timezone).local_to_utc(run_at)
   end
 
