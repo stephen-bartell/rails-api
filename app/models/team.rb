@@ -27,7 +27,7 @@ class Team < ActiveRecord::Base
   has_many :scrums
   has_many :entries
 
-  # after_save :update_event_schedule
+  after_save :queue_events
 
   before_validation(on: :create) do
     self.auth_token = SecureRandom.hex
