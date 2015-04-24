@@ -22,6 +22,7 @@ gem 'rest-client'
 gem 'mustache'
 
 gem 'sidekiq'
+gem 'sinatra', :require => nil
 
 gem 'parse-cron'
 
