@@ -6,6 +6,15 @@ class ScheduleEventWorker
     console.log "---------------------------------"
     console.log "#{team_id}, #{event_name}"
     console.log "---------------------------------"
+
+    # Find team
+    team = Team.find team_id
+
+    # run method, ie, team.prompt
+    team.send(event_name)
+
+    # Requeue event
+    team.queue_event(event_name)
   end
 
   def cancelled?

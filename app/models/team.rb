@@ -60,12 +60,15 @@ class Team < ActiveRecord::Base
   end
 
   def prompt
+    message('prompt')
   end
 
   def reminder
+    message('reminder')
   end
 
   def summary
+    current_scrum.deliver_summary_email
   end
 
   def next_run_for_event(event_name)
@@ -74,7 +77,20 @@ class Team < ActiveRecord::Base
     cron.next(Time.now + 10.seconds)
   end
 
+  def queue_events
+    ['prompt', 'remind', 'summary'].each do |event_name|
+      queue_event(event_name)
+    end
+  end
+
+  def unqueue_events
+    ['prompt', 'remind', 'summary'].each do |event_name|
+      unqueue_event(event_name)
+    end
+  end
+
   def queue_event(event_name)
+    unqueue_event(event_name)
     run_at = next_run_for_event(event_name)
     jid = ScheduleEventWorker.perform_at(run_at, id, event_name)
     update_column("#{event_name}_jid".to_sym, jid)
