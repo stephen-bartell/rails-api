@@ -1,5 +1,5 @@
-Team summary for {{scrum.date}}:
-{{#each scrum.players}}
+Team summary for {{data.date}}:
+{{#each data.players}}
 *{{real_name}}*
 {{#each categories}}
   {{category}}:
