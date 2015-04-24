@@ -42,7 +42,7 @@ class Team < ActiveRecord::Base
     http = Net::HTTP.new(uri.host)
 
     request = Net::HTTP::Post.new(path, {'Content-Type' =>'application/json'})
-    request.body = data.to_json
+    request.body = data.as_json
 
     response = http.request(request)
   end
@@ -86,8 +86,10 @@ class Team < ActiveRecord::Base
 
     # message players
     # TODO: should take an array of channels
+    scrum = ActiveModel::ArraySerializer.new([team.current_scrum])
+
     template_path = Rails.root.join('lib/messages/summary.text')
-    announce("general", { name: name }, File.read(template_path))
+    announce("general", scrum, File.read(template_path))
   end
 
   def next_run_for_event(event_name)
