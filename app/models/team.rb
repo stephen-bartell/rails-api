@@ -82,7 +82,7 @@ class Team < ActiveRecord::Base
 
   def summary
     # send emails
-    current_scrum.deliver_summary_email
+    # current_scrum.deliver_summary_email
 
     # message players
     # TODO: should take an array of channels
