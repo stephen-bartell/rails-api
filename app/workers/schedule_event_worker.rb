@@ -3,9 +3,6 @@ class ScheduleEventWorker
 
   def perform(team_id, event_name)
     return if cancelled?
-    console.log "---------------------------------"
-    console.log "#{team_id}, #{event_name}"
-    console.log "---------------------------------"
 
     # Find team
     team = Team.find team_id
