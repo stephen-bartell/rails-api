@@ -56,8 +56,8 @@ class Player < ActiveRecord::Base
     name || real_name
   end
 
-  def message(message, template = 'basic')
-    team.message(message, [slack_id], template)
+  def message(data = {}, template)
+    team.message([slack_id], data, template)
   end
 
 end

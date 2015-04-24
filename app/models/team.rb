@@ -47,25 +47,21 @@ class Team < ActiveRecord::Base
     response = http.request(request)
   end
 
-  def announce(message, channel = 'general', template = 'basic')
+  def announce(channel = 'general', data = {}, template)
     data = {
       channel: channel,
-      message: {
-        body: message,
-        template: template
-      }
+      data: data,
+      template: template
     }
 
     send_to_slack_client(data, '/hubot/astroscrum/announce')
   end
 
-  def message(message, players, template = 'basic')
+  def message(players, data = {}, template)
     data = {
       players: players,
-      message: {
-        body: message,
-        template: template
-      }
+      data: data,
+      template: template
     }
 
     send_to_slack_client(data, '/hubot/astroscrum/message')

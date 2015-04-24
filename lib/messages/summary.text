@@ -1,0 +1,11 @@
+Team summary for {{scrum.date}}:
+{{#each scrum.players}}
+*{{real_name}}*
+{{#each categories}}
+  {{category}}:
+  {{#each entries}}
+   - {{body}}
+  {{/each}}
+{{/each}}
+
+{{/each}}
