@@ -56,9 +56,15 @@ class Player < ActiveRecord::Base
     name || real_name
   end
 
-  def summary
-    "<li>" +
-     "#{display_name}" +
-    "</li>"
+  def message(message, channel = 'general')
+    data = {
+      slack_id: slack_id,
+      message: {
+        body: message,
+        template: nil
+      }
+    }
+
+    team.send_to_slack_client(data)
   end
 end
