@@ -42,12 +42,7 @@ class Team < ActiveRecord::Base
     http = Net::HTTP.new(uri.host)
 
     request = Net::HTTP::Post.new(path, {'Content-Type' =>'application/json'})
-
-    if data.class == ActiveModel::ArraySerializer
-      request.body = data.as_json
-    else
-      request.body = data.to_json
-    end
+    request.body = data.to_json
 
     response = http.request(request)
   end
@@ -94,7 +89,7 @@ class Team < ActiveRecord::Base
     scrum = ActiveModel::ArraySerializer.new([team.current_scrum])
 
     template_path = Rails.root.join('lib/messages/summary.text')
-    announce("general", scrum, File.read(template_path))
+    announce("general", { scrum: scrum.as_json[0] }, File.read(template_path))
   end
 
   def next_run_for_event(event_name)
