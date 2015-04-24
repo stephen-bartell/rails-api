@@ -86,10 +86,15 @@ class Team < ActiveRecord::Base
 
     # message players
     # TODO: should take an array of channels
-    scrum = ActiveModel::Serializer.new(current_scrum)
+    scrum = {
+      id: current_scrum.id,
+      date: current_scrum.date,
+      points: current_scrum.points,
+      players: current_scrum.serialized_players
+    }
 
     template_path = Rails.root.join('lib/messages/summary.text')
-    announce("general", scrum.as_json, File.read(template_path))
+    announce("general", scrum, File.read(template_path))
   end
 
   def next_run_for_event(event_name)
