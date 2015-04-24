@@ -42,7 +42,12 @@ class Team < ActiveRecord::Base
     http = Net::HTTP.new(uri.host)
 
     request = Net::HTTP::Post.new(path, {'Content-Type' =>'application/json'})
-    request.body = data.as_json
+
+    if data.class == ActiveModel::ArraySerializer
+      request.body = data.as_json
+    else
+      request.body = data.to_json
+    end
 
     response = http.request(request)
   end
