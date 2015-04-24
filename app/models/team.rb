@@ -37,26 +37,38 @@ class Team < ActiveRecord::Base
     scrums.find_or_create_by(date: Date.today)
   end
 
-  def send_to_slack_client(data)
+  def send_to_slack_client(data, path)
     uri = URI(bot_url)
     http = Net::HTTP.new(uri.host)
 
-    request = Net::HTTP::Post.new('/hubot/astroscrum/team', {'Content-Type' =>'application/json'})
+    request = Net::HTTP::Post.new(path, {'Content-Type' =>'application/json'})
     request.body = data.to_json
 
     response = http.request(request)
   end
 
-  def message(message, channel = 'general')
+  def announce(message, channel = 'general', template = 'basic')
     data = {
       channel: channel,
       message: {
         body: message,
-        template: nil
+        template: template
       }
     }
 
-    send_to_slack_client(data)
+    send_to_slack_client(data, '/hubot/astroscrum/announce')
+  end
+
+  def message(message, players, template = 'basic')
+    data = {
+      players: players,
+      message: {
+        body: message,
+        template: template
+      }
+    }
+
+    send_to_slack_client(data, '/hubot/astroscrum/message')
   end
 
   def prompt
@@ -78,18 +90,6 @@ class Team < ActiveRecord::Base
     ActiveSupport::TimeZone.new(timezone).local_to_utc(run_at)
   end
 
-  def queue_events
-    ['prompt', 'remind', 'summary'].each do |event_name|
-      queue_event(event_name)
-    end
-  end
-
-  def unqueue_events
-    ['prompt', 'remind', 'summary'].each do |event_name|
-      unqueue_event(event_name)
-    end
-  end
-
   def queue_event(event_name)
     unqueue_event(event_name)
     run_at = next_run_for_event(event_name)
@@ -102,6 +102,18 @@ class Team < ActiveRecord::Base
     queue = Sidekiq::ScheduledSet.new
     queue.each do |job|
       job.delete if job.jid == job_id
+    end
+  end
+
+  def queue_events
+    ['prompt', 'remind', 'summary'].each do |event_name|
+      queue_event(event_name)
+    end
+  end
+
+  def unqueue_events
+    ['prompt', 'remind', 'summary'].each do |event_name|
+      unqueue_event(event_name)
     end
   end
 
