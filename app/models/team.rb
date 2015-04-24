@@ -98,7 +98,7 @@ class Team < ActiveRecord::Base
 
   def unqueue_event(event_name)
     job_id = self["#{event_name}_jid"]
-    queue = Sidekiq::Queue.new
+    queue = Sidekiq::ScheduledSet.new
     queue.each do |job|
       job.delete if job.jid == job_id
     end
