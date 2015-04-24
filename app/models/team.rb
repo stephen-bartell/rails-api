@@ -68,15 +68,26 @@ class Team < ActiveRecord::Base
   end
 
   def prompt
-    message('prompt')
+    template_path = Rails.root.join('lib/messages/prompt.text')
+    message(players.map(&:slack_id), { name: name }, File.read(template_path))
   end
 
   def reminder
-    message('reminder')
+    # TODO: just get the players who have not done their scrum
+    players = players.map(&:slack_id)
+
+    template_path = Rails.root.join('lib/messages/reminder.text')
+    message(players, { name: name }, File.read(reminder_path))
   end
 
   def summary
+    # send emails
     current_scrum.deliver_summary_email
+
+    # message players
+    # TODO: should take an array of channels
+    template_path = Rails.root.join('lib/messages/summary.text')
+    announce("general", { name: name }, File.read(template_path))
   end
 
   def next_run_for_event(event_name)
