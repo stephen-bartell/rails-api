@@ -1,5 +1,5 @@
-Team summary for {{data.date}}:
-{{#each data.players}}
+Team summary for {{date}}:
+{{#each players}}
 *{{real_name}}*
 {{#each categories}}
   {{category}}:
