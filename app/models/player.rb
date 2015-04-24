@@ -56,25 +56,8 @@ class Player < ActiveRecord::Base
     name || real_name
   end
 
-  def send_to_slack_client(data)
-    uri = URI(team.bot_url)
-    http = Net::HTTP.new(uri.host)
-
-    request = Net::HTTP::Post.new("/hubot/astroscrum/players/#{slack_id}", {'Content-Type' =>'application/json'})
-    request.body = data.to_json
-
-    response = http.request(request)
+  def message(message, template = 'basic')
+    team.message(message, [slack_id], template)
   end
 
-  def message(message)
-    data = {
-      slack_id: slack_id,
-      message: {
-        body: message,
-        template: nil
-      }
-    }
-
-    send_to_slack_client(data)
-  end
 end
