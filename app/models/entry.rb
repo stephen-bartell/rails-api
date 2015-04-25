@@ -19,4 +19,10 @@ class Entry < ActiveRecord::Base
 
   scope :current, -> { where(created_at: Date.today.beginning_of_day..Date.today.end_of_day) }
 
+  before_save :set_points
+
+  def update_player
+    scrum.team.prompt_at
+  end
+
 end

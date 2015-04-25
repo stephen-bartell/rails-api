@@ -18,6 +18,26 @@ class Scrum < ActiveRecord::Base
 
   scope :today, -> { where(date: Date.today) }
 
+  def tally
+    cron = CronParser.new(team.summary_at)
+    entries_due_at = cron.last(Time.now)
+
+    players.each do
+      scoring_entries = []
+      entries.each do |entry|
+        if entry.created_at < entries_due_at
+          scoring_entries << entry
+        end
+      end
+
+      puts "==========================="
+      puts "tally"
+      puts scoring_entries.count
+      puts scoring_entries
+    end
+
+  end
+
   def serialized_players
     players.uniq.map do |player|
 
