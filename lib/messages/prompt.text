@@ -1,2 +1,1 @@
-prompt template, for {{player.name}}
-
+Hey {{name}}, are you ready to do your scrum?! Message me back with `scrum help` if you need any details on how to do your scrum.
