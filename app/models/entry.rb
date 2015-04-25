@@ -30,7 +30,7 @@ class Entry < ActiveRecord::Base
     entries_due_at = cron.last(Time.now)
 
     if created_at < ActiveSupport::TimeZone.new(scrum.team.timezone).local_to_utc(entries_due_at)
-      points = 5
+      write_attribute :points, 5
     end
   end
 
