@@ -33,6 +33,10 @@ class Team < ActiveRecord::Base
     self.auth_token = SecureRandom.hex
   end
 
+  def tally
+    update_column :points, scrums.sum(:points)
+  end
+
   def current_scrum
     scrums.find_or_create_by(date: Date.today)
   end

@@ -18,6 +18,11 @@ class Scrum < ActiveRecord::Base
 
   scope :today, -> { where(date: Date.today) }
 
+  def tally
+    update_column :points, entries.sum(:points)
+    team.tally
+  end
+
   def serialized_players
     players.uniq.map do |player|
 

@@ -32,6 +32,8 @@ class Entry < ActiveRecord::Base
     if created_at < ActiveSupport::TimeZone.new(scrum.team.timezone).local_to_utc(entries_due_at)
       write_attribute :points, 5
     end
+
+    scrum.tally
   end
 
 end
