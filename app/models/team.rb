@@ -86,7 +86,11 @@ class Team < ActiveRecord::Base
 
   def summary
     # send emails
-    # current_scrum.deliver_summary_email
+    begin
+      self.current_scrum.deliver_summary_email
+    rescue
+      puts "failed to deliver scrum summary email"
+    end
 
     # message players
     # TODO: should take an array of channels
