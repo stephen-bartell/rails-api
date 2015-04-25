@@ -21,10 +21,6 @@ class Entry < ActiveRecord::Base
 
   before_save :tally
 
-  def update_player
-    scrum.team.prompt_at
-  end
-
   def tally
     cron = CronParser.new(scrum.team.summary_at)
     entries_due_at = cron.last(Time.now)

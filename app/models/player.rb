@@ -60,4 +60,10 @@ class Player < ActiveRecord::Base
     team.message([slack_id], data, template)
   end
 
+  ##
+  # TODO: this should only tally up current season scrums
+  def tally
+    update_column :points, entries.sum(:points)
+  end
+
 end

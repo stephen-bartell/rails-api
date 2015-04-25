@@ -35,6 +35,10 @@ class Team < ActiveRecord::Base
 
   def tally
     update_column :points, scrums.sum(:points)
+
+    players.each do |player|
+      player.tally
+    end
   end
 
   def current_scrum
