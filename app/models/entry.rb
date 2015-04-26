@@ -19,7 +19,7 @@ class Entry < ActiveRecord::Base
 
   scope :current, -> { where(created_at: Date.today.beginning_of_day..Date.today.end_of_day) }
 
-  before_save :tally
+  after_create :tally
 
   def tally
     cron = CronParser.new(scrum.team.summary_at)
