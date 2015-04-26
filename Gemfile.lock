@@ -42,6 +42,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    airbrake (4.1.0)
+      builder
+      multi_json
     annotate (2.6.8)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
@@ -187,6 +190,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activerecord-session_store
+  airbrake
   annotate
   bcrypt-ruby
   dotenv-rails
