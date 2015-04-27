@@ -80,12 +80,12 @@ class Team < ActiveRecord::Base
     message(players.map(&:slack_id), { name: name }, File.read(template_path))
   end
 
-  def reminder
+  def remind
     # TODO: just get the players who have not done their scrum
     # players = players.map(&:slack_id)
 
     template_path = Rails.root.join('lib/messages/reminder.text')
-    message(players.map(&:slack_id), { name: name }, File.read(reminder_path))
+    message(players.map(&:slack_id), { name: name }, File.read(template_path))
   end
 
   def summary
