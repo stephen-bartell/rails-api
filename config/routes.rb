@@ -24,7 +24,8 @@ Rails.application.routes.draw do
     end
   # end
 
-  get 'join' => 'oauth#join'
+  get '/oauth/slack/join'     => 'oauth#join'
+  get '/oauth/slack/callback' => 'oauth#callback'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
