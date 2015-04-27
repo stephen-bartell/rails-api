@@ -1,23 +1,10 @@
 ## Rails API
 
-lorem
+Astroscrum Rails API
 
-### API
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/astroscrum/rails-api)
 
-The base path of the API is:
+### Docs
 
-#### /team
-
-lorem
-
-```
-GET /v1/team
-
-{}
-```
-
-
-
-
-
+Read the Astroscrum docs at [docs.astroscrum.com](docs.astroscrum.com)
 

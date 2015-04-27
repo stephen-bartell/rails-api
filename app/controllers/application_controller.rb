@@ -3,7 +3,6 @@ class ApplicationController < ActionController::API
 
   helper_method :current_team
   before_action :authenticate!
-  before_action :log_request
 
   def auth_token
     if token = params[:auth_token].blank? && request.headers['X-Auth-Token']
@@ -19,10 +18,6 @@ class ApplicationController < ActionController::API
   end
 
   private
-
-  def log_request
-    Rails.logger.info(request.env)
-  end
 
   def current_team
     authenticate!
