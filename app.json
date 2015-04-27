@@ -1,0 +1,7 @@
+{
+  "name": "Astroscrum Server",
+  "description": "A standalone server for Astroscrum, if you want to run your own private API.",
+  "repository": "https://github.com/astroscrum/rails-api",
+  "logo": "http://astroscrum.com/images/astronaut.png",
+  "keywords": ["scrum", "Astroscrum", "Slack"]
+}
