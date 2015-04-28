@@ -27,7 +27,7 @@ class Scrum < ActiveRecord::Base
     players.uniq.map do |player|
 
       # Group the entries by category
-      categories = player.entries.group_by { |entry| entry[:category] }
+      categories = player.team.current_scrum.entries.group_by { |entry| entry[:category] }
 
       {
         id: player.id,

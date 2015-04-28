@@ -14,6 +14,6 @@
 
 class EntrySerializer < ActiveModel::Serializer
 
-  attributes :id, :category, :body
+  attributes :id, :category, :body, :points
 
 end

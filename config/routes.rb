@@ -14,7 +14,11 @@ Rails.application.routes.draw do
         resource :team
 
         resources :players
-        resources :entries
+        resources :entries do
+          collection do
+            delete '/' => 'entries#destroy'
+          end
+        end
 
         resource :scrum, only: [:show]
         resources :scrums

@@ -43,10 +43,28 @@ HTTP/1.1 200 OK
       end
     end
 
+=begin
+@api {delete} /entries Delete entries by player or category
+=end
+    def destroy
+      player = current_team.players.find_by_slack_id(entries_params[:slack_id])
+      @entries = Entry.destroy_by_category_for_player(player.slack_id, entries_params[:category])
+
+      if @entries
+        render json: @entries
+      else
+        render json: { errors: "Error deleting entries" }
+      end
+    end
+
     private
 
     def entry_params
       params.require(:entry).permit(:slack_id, :category, :body)
+    end
+
+    def entries_params
+      params.require(:entries).permit(:slack_id, :category)
     end
 
   end
