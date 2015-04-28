@@ -2,13 +2,12 @@
   <p>Hey %recipient.name%, today you earned %recipient.points% points today!</p>
 
   {{#players}}
-  <strong>{{name}}</strong> ({{points}})<br>
+  <strong>{{real_name}}</strong> ({{points}})<br>
+  <ul>
   {{#categories}}
-  {{category}}:<br>
-    {{#entries}}
-    - {{body}}<br>
-    {{/entries}}
+    <li>{{category}}: {{#entries}}{{body}}; {{/entries}}</li>
   {{/categories}}
+  </ul>
 
   {{/players}}
   <br>

@@ -1,11 +1,8 @@
 Team summary for {{date}}:
 {{#each players}}
-*{{real_name}}*
-{{#each categories}}
-  {{category}}:
-  {{#each entries}}
-   - {{body}}
-  {{/each}}
+*{{real_name}}* ({{points}})
+{#each categories}}
+  {{category}}: {{#each entries}}{{body}}; {{/each}}
 {{/each}}
 
 {{/each}}
