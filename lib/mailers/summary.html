@@ -3,19 +3,13 @@
 
   {{#players}}
   <strong>{{name}}</strong> ({{points}})<br>
-  Today<br>
-  {{#entries}}
-    {{#today}}
-     - {{body}}<br>
-    {{/today}}
-  {{/entries}}
+  {{#categories}}
+  {{category}}:<br>
+    {{#entries}}
+    - {{body}}<br>
+    {{/each}}
+  {{/each}}
+
+  {{/each}}
   <br>
-
-  {{/players}}
-  <br>
-
-  Not filled:<br>
-
-  Overall standings:<br>
-
 </html>
