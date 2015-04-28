@@ -17,9 +17,7 @@ class Entry < ActiveRecord::Base
   belongs_to :player
   belongs_to :scrum
 
-  # scope :deletable, -> { where(created_at: Date.today.beginning_of_day..Date.today.end_of_day) }
-
-  after_create :tally
+  before_save :tally
   after_destroy -> { self.scrum.tally }
 
   def self.deletable
