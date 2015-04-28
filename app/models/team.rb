@@ -92,7 +92,7 @@ class Team < ActiveRecord::Base
   def summary
     # send emails
     begin
-      self.current_scrum.deliver_summary_email
+      current_scrum.deliver_summary_email
     rescue
       puts "failed to deliver scrum summary email"
     end
