@@ -1,13 +1,13 @@
 Hey %recipient.name%, today you earned %recipient.points% points today!
 
 Team summary for {{date}}:
-{{#each players}}
+{{#players}}
 *{{name}}* ({{points}})
-{{#each categories}}
+{{#categories}}
 {{category}}:
-  {{#each entries}}
+  {{#entries}}
   - {{body}}
-  {{/each}}
-{{/each}}
+  {{/entries}}
+{{/categories}}
 
-{{/each}}
+{{/players}}
