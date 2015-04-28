@@ -113,8 +113,16 @@ class Team < ActiveRecord::Base
   def next_run_for_event(event_name)
     crontab = self["#{event_name}_at"]
     cron = CronParser.new(crontab)
-    run_at = cron.next(ActiveSupport::TimeZone.new(timezone).local_to_utc(Time.now) + 10.seconds)
-    ActiveSupport::TimeZone.new(timezone).local_to_utc(run_at)
+
+    puts "next_run_for_event(event_name) -----------------------------------------------------"
+    local_time = ActiveSupport::TimeZone.new(timezone).local_to_utc(Time.now) + 10.seconds
+    puts local_time
+
+    run_at = cron.next(local_time)
+    run_at_time = ActiveSupport::TimeZone.new(timezone).local_to_utc(run_at)
+
+    puts run_at_time
+    run_at_time
   end
 
   def queue_event(event_name)
