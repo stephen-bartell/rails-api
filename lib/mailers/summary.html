@@ -1,11 +1,11 @@
 <html>
   <p>Hey %recipient.name%, today you earned %recipient.points% points today!</p>
 
-  {{#players}}
+  {{#each players}}
   <strong>{{name}}</strong> ({{points}})<br>
-  {{#categories}}
+  {{#each categories}}
   {{category}}:<br>
-    {{#entries}}
+    {{#each entries}}
     - {{body}}<br>
     {{/each}}
   {{/each}}
