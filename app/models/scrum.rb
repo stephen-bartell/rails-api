@@ -27,7 +27,8 @@ class Scrum < ActiveRecord::Base
     players.uniq.map do |player|
 
       # Group the entries by category
-      categories = player.team.current_scrum.entries.group_by { |entry| entry[:category] }
+
+      categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
 
       {
         id: player.id,
