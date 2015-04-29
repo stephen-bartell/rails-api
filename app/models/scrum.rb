@@ -19,7 +19,21 @@ class Scrum < ActiveRecord::Base
   scope :today, -> { where(date: Date.today) }
 
   def tally
-    update_column :points, entries.sum(:points)
+    points = 0
+    cron = CronParser.new(team.summary_at)
+    entries_due_at = cron.last(ActiveSupport::TimeZone.new(team.timezone).now)
+    entries_due_at.change(year: date.year, month: date.month, day: date.day)
+
+    players.uniq.map do |player|
+      entries = Entry.where(scrum_id: id, player_id: player.id)
+      entries = entries.where('created_at < ?', ActiveSupport::TimeZone.new(team.timezone).local_to_utc(entries_due_at))
+      entries = entries.group_by { |entry| entry[:category] }
+
+      points += 5 if entries.keys.include? 'today'
+      points += 5 if entries.keys.include? 'yesterday'
+    end
+
+    update_column :points, points
     team.tally
   end
 
@@ -27,7 +41,6 @@ class Scrum < ActiveRecord::Base
     players.uniq.map do |player|
 
       # Group the entries by category
-
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
 
       {

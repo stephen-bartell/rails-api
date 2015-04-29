@@ -17,7 +17,7 @@ class Entry < ActiveRecord::Base
   belongs_to :player
   belongs_to :scrum
 
-  after_commit :tally
+  after_commit -> { self.scrum.tally }
   after_destroy -> { self.scrum.tally }
 
   def self.deletable
@@ -39,14 +39,4 @@ class Entry < ActiveRecord::Base
     entries
   end
 
-  def tally
-    cron = CronParser.new(scrum.team.summary_at)
-    entries_due_at = cron.last(Time.now)
-
-    if created_at < ActiveSupport::TimeZone.new(scrum.team.timezone).local_to_utc(entries_due_at)
-      update_column :points, 5
-    end
-
-    scrum.tally
-  end
 end
