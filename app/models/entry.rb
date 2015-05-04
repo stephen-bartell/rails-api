@@ -18,6 +18,7 @@ class Entry < ActiveRecord::Base
   belongs_to :scrum
 
   after_commit -> { self.scrum.tally }
+  after_commit :tally
   after_destroy -> { self.scrum.tally }
 
   def self.deletable
@@ -37,6 +38,12 @@ class Entry < ActiveRecord::Base
 
     entries = entries.destroy_all
     entries
+  end
+
+  def tally
+    if player.team.current_scrum.entries.where(player_id: player.id, category: ['today', 'yesterday']).first == self
+      update_column :points, 5
+    end
   end
 
 end
