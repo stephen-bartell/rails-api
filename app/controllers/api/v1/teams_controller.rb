@@ -34,11 +34,21 @@ HTTP/1.1 200 OK
 @apiSuccess (200 Response) {String} auth_token The `auth_token`, you'll be required to send with all other requests
 @apiParam {String} name The team name in Slack
 @apiParam {String} slack_id The `slack_id` of the team
+@apiParam {String} timezone The timezone of your team, this affects the time the bot will message the players
+@apiParam {String} slack_id The `slack_id` of the team
+@apiParam {String} slack_id The `slack_id` of the team
+@apiParam {String} slack_id The `slack_id` of the team
 @apiExample {json} Example-Request:
 POST /v1/team HTTP/1.1
 {
   "team": {
-     "name": "Astroscrum"
+    "name": "Astroscrum",
+    "slack_id": "T7466K85D",
+    "timezone": "Pacific Time (US & Canada)",
+    "bot_url": "http://example.com/api/v1",
+    "prompt_at": "0 6 * * * *",
+    "remind_at": "0 11 * * * *",
+    "summary_at": "0 12 * * * *"
   }
 }
 
@@ -46,7 +56,11 @@ POST /v1/team HTTP/1.1
 HTTP/1.1 200 OK
 {
   "team": {
-    "auth_token": "c25a1f20b3af295280024c991a205482",
+    "auth_token": "10b1f818fvc01eed6cc84bd53aaf928f0",
+    "id": "5a3d8fac-3df3-4b70-95eb-17a4c6a9a265",
+    "name": "Astroscrum",
+    "points": 0,
+    "slack_id": "T7466K85D"
   }
 }
 
