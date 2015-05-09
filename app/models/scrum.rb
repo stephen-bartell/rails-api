@@ -21,7 +21,7 @@ class Scrum < ActiveRecord::Base
   def tally
     points = 0
     cron = CronParser.new(team.summary_at)
-    entries_due_at = cron.last(ActiveSupport::TimeZone.new(team.timezone).now)
+    entries_due_at = cron.next(ActiveSupport::TimeZone.new(team.timezone).beginning_of_day)
     entries_due_at.change(year: date.year, month: date.month, day: date.day)
 
     players.uniq.map do |player|

@@ -78,11 +78,19 @@ class Team < ActiveRecord::Base
   end
 
   def remind
-    # TODO: just get the players who have not done their scrum
-    # players = players.map(&:slack_id)
-
     template_path = Rails.root.join('lib/messages/reminder.text')
-    message(players.map(&:slack_id), { name: name }, File.read(template_path))
+
+    players_to_remind = []
+    players.each do |player|
+      entries = Entry.where(player_id: player.id, scrum_id: current_scrum.id, category: ['today', 'yesterday'])
+      if entries.size == 0
+        players_to_remind << player
+      end
+    end
+
+    if players_to_remind.size > 0
+      message(players_to_remind.map(&:slack_id), { name: name }, File.read(template_path))
+    end
   end
 
   def summary

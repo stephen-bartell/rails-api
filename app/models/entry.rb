@@ -49,6 +49,8 @@ class Entry < ActiveRecord::Base
     if entry && entry.first.id == self.id
       update_column :points, 5
     end
+
+    player.tally
   end
 
 end
