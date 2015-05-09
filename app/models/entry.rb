@@ -41,7 +41,12 @@ class Entry < ActiveRecord::Base
   end
 
   def tally
-    if player.team.current_scrum.entries.where(player_id: player.id, category: ['today', 'yesterday']).first == self
+    cron = CronParser.new(scrum.team.summary_at)
+    entry_due_at = cron.next(scrum.date.at_beginning_of_day)
+
+    entry = Entry.where(player_id: player.id, scrum_id: scrum.id, category: ['today', 'yesterday'])
+
+    if entry && entry.first.id == self.id
       update_column :points, 5
     end
   end
