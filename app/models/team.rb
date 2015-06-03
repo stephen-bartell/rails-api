@@ -26,6 +26,8 @@ class Team < ActiveRecord::Base
   has_many :players
   has_many :scrums
   has_many :entries
+  has_many :jobs, as: :resource
+
 
   after_save :queue_events
 

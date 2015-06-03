@@ -1,20 +1,31 @@
-
-class ScheduleEventWorker
+class ScheduleJobWorker
   include Sidekiq::Worker
 
-  def perform(team_id, event_name)
+  sidekiq_options retry: false
+
+  def perform(id, method_string)
 
     # Check if the job is cancelled first
     return if cancelled?
 
-    # Find team
-    team = Team.find team_id
+    # Find job
+    job = Job.find id
 
-    # run method, ie, team.prompt
-    team.send(event_name)
+    # Update status
+    job.update_column(:status, 'running')
+
+    # run method with args
+    job.run
 
     # Requeue event
-    team.queue_event(event_name)
+    if job.reoccurs?
+      job.queue
+      job.update_column(:status, 'requeued')
+    else
+      job.update_column(:status, 'finished')
+    end
+
+    # TODO: publish seralized job here?
 
   end
 
