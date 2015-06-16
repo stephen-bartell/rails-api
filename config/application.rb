@@ -21,6 +21,10 @@ module Api
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # For returning errors as JSON
+    # http://stackoverflow.com/questions/10253366/need-to-return-json-formatted-404-error-in-rails
+    config.exceptions_app = self.routes
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'

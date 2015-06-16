@@ -24,6 +24,10 @@ Rails.application.routes.draw do
         resources :scrums
         resources :sessions
 
+        # Error handling
+        match '404' => 'errors#not_found', via: :all
+        match '500' => 'errors#exception', via: :all
+
       end
     end
   # end
