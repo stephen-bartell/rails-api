@@ -18,23 +18,24 @@ class Scrum < ActiveRecord::Base
 
   scope :today, -> { where(date: Date.today) }
 
+  def entries_due_at
+    cron = CronParser.new(self.team.summary_at)
+    due_at = cron.next(created_at.beginning_of_day)
+    due_at.change(year: date.year, month: date.month, day: date.day)
+
+    ActiveSupport::TimeZone.new(team.timezone).local_to_utc(due_at)
+  end
+
+  def entries_allowed_after
+    ActiveSupport::TimeZone.new(team.timezone).local_to_utc(created_at.beginning_of_day)
+  end
+
   def tally
-    points = 0
-    cron = CronParser.new(team.summary_at)
-    entries_due_at = cron.next(ActiveSupport::TimeZone.new(team.timezone).beginning_of_day)
-    entries_due_at.change(year: date.year, month: date.month, day: date.day)
+    update_column :points, entries.sum(:points)
+  end
 
-    players.uniq.map do |player|
-      entries = Entry.where(scrum_id: id, player_id: player.id)
-      entries = entries.where('created_at < ?', ActiveSupport::TimeZone.new(team.timezone).local_to_utc(entries_due_at))
-      entries = entries.group_by { |entry| entry[:category] }
-
-      points += 5 if entries.keys.include? 'today'
-      points += 5 if entries.keys.include? 'yesterday'
-    end
-
-    update_column :points, points
-    team.tally
+  def tally_points_for_player(player)
+    entries.where(player_id: player.id).sum(:points)
   end
 
   def serialized_players
@@ -50,6 +51,7 @@ class Scrum < ActiveRecord::Base
         name: player.name,
         real_name: player.real_name,
         points: player.points,
+        points_today: tally_points_for_player(player),
         categories: categories.map { |k,v| { category: k, entries: v.map { |entry| entry.slice(:body, :points) } }}
       }
     end
@@ -57,11 +59,11 @@ class Scrum < ActiveRecord::Base
 
   # FIXME: do this in a sane way
   def recipient_variables
-    Hash[ *players.uniq.collect { |v| [ v.email, {name: v.name, points: v.points} ] }.flatten ]
+    Hash[ *players.uniq.collect { |v| [ v.email, {name: v.name, points: tally_points_for_player(v)} ] }.flatten ]
   end
 
   def deliver_summary_email
-    recipients = players.uniq
+    recipients = team.players.uniq
 
     to = recipients.map {|recipient| "#{recipient.real_name} <#{recipient.email}>" }
 
@@ -72,14 +74,23 @@ class Scrum < ActiveRecord::Base
     html_path = Rails.root.join('lib/mailers/summary.html')
     html = Mustache.render(File.read(html_path), players: serialized_players)
 
-    # TODO: Extract the mailer methods more discretly
-    RestClient.post ENV['MAILGUN_URL'],
-        "from"     => "Scrum Bot <bot@astroscrum.com>",
-        "to"       => to.join(','),
-        "subject"  => "[Astroscrum] Summary for team #{team.name} - #{date}",
-        "text"     => text,
-        "html"     => html,
-        "recipient-variables" => recipient_variables.to_json
+    if entries.count > 0
+      RestClient.post ENV['MAILGUN_URL'],
+          "from"     => "Scrum Bot <bot@astroscrum.com>",
+          "to"       => to.join(','),
+          "subject"  => "[Astroscrum] Summary for team #{team.name} - #{date}",
+          "text"     => text,
+          "html"     => html,
+          "recipient-variables" => recipient_variables.to_json
+    else
+      RestClient.post ENV['MAILGUN_URL'],
+          "from"     => "Scrum Bot <bot@astroscrum.com>",
+          "to"       => to.join(','),
+          "subject"  => "[Astroscrum] Nobody on your team did their scrum today ಠ_ಠ",
+          "text"     => "ಠ_ಠ",
+          "html"     => "ಠ_ಠ",
+          "recipient-variables" => recipient_variables.to_json
+    end
 
   end
 

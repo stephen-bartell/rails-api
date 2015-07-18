@@ -28,7 +28,6 @@ class Team < ActiveRecord::Base
   has_many :entries
   has_many :jobs, as: :resource
 
-
   after_save :queue_events
 
   before_validation(on: :create) do

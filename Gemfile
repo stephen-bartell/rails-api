@@ -1,8 +1,8 @@
-ruby '2.2.1'
+ruby '2.2.2'
 source 'https://rubygems.org'
 
 gem 'puma'
-gem 'rails', '4.2.1'
+gem 'rails'
 gem 'rails-api'
 
 gem 'spring', :group => :development

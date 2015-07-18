@@ -1,4 +1,4 @@
-Hey %recipient.name%, today you earned %recipient.points% points today!
+Hey %recipient.name% today you earned %recipient.points% points!
 
 Team summary for {{date}}:
 {{#players}}

@@ -17,9 +17,11 @@ class Entry < ActiveRecord::Base
   belongs_to :player
   belongs_to :scrum
 
-  after_commit -> { self.scrum.tally }
-  after_commit :tally
-  after_destroy -> { self.scrum.tally }
+  after_create :tally
+
+  def category=(category)
+    write_attribute(:category, category.downcase)
+  end
 
   def self.deletable
     where(created_at: Date.today.beginning_of_day..Date.today.end_of_day)
@@ -41,16 +43,24 @@ class Entry < ActiveRecord::Base
   end
 
   def tally
-    cron = CronParser.new(scrum.team.summary_at)
-    entry_due_at = cron.next(scrum.date.at_beginning_of_day)
+    entry_for_today = scrum.entries.where(player_id: player_id, category: "today").count > 1
+    entry_for_yesterday = scrum.entries.where(player_id: player_id, category: "yesterday").count > 1
 
-    entry = Entry.where(player_id: player.id, scrum_id: scrum.id, category: ['today', 'yesterday'])
+    if created_at > scrum.entries_allowed_after && created_at < scrum.entries_due_at
+      if !entry_for_today && category == "today"
+        update_column :points, 5
+      end
 
-    if entry && entry.first.id == self.id
-      update_column :points, 5
+      if !entry_for_yesterday && category == "yesterday"
+        update_column :points, 5
+      end
     end
 
     player.tally
+    scrum.tally
+    scrum.team.tally
+
+    self.points
   end
 
 end
