@@ -173,10 +173,9 @@ HTTP/1.1 200 OK
 @apiGroup Player
 =end
     def update
-      @player = Player.where(id: params[:id], team_id: current_team.id).first
-      @player.attributes = update_params
+      @player = Player.where(slack_id: params[:id], team_id: current_team.id).first
 
-      if @player.save
+      if @player.update(update_params)
         render json: @player
       else
         render json: { errors: @player.errors.messages }
