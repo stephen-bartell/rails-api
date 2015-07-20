@@ -43,9 +43,6 @@ HTTP/1.1 200 OK
       end
     end
 
-=begin
-@api {delete} /entries Delete entries by player or category
-=end
     def destroy
       player = current_team.players.find_by_slack_id(entries_params[:slack_id])
       @entries = Entry.destroy_by_category_for_player(player.slack_id, entries_params[:category])

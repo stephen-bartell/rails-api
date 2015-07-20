@@ -22,7 +22,8 @@ class PlayerSerializer < ActiveModel::Serializer
     :name,
     :real_name,
     :email,
-    :points
+    :points,
+    :notifications
 
 
 end

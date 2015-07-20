@@ -4,11 +4,13 @@
 #
 #  id                   :integer          not null, primary key
 #  jid                  :string
-#  method_string        :string
+#  method_string        :string           not null
 #  reoccurrence_crontab :string
 #  run_at               :datetime
-#  run_count            :integer
+#  run_count            :integer          default(1)
 #  status               :string
+#  resource_id          :uuid
+#  resource_type        :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #

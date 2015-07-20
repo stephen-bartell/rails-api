@@ -125,10 +125,72 @@ HTTP/1.1 200 OK
       end
     end
 
+
+=begin
+@api {put} /players/:id Update a player
+@apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token
+@apiParam {String} password Password
+@apiParam {String} name Short name or chat mention name
+@apiParam {String} email Email address for player
+@apiParam {boolean} player receives notifications?
+@apiParam {String} [real_name] Optional real name of the Player
+
+@apiSuccess (200 Response) {String} id A uuid for this resource
+@apiSuccess (200 Response) {String} slack_id The `slack_id` for this player (a uuid for slack)
+@apiSuccess (200 Response) {String} name The players chat mention name and shortname
+@apiSuccess (200 Response) {String} real_name The full name for this player
+@apiSuccess (200 Response) {boolean} the player will receive email and chat notifications
+@apiSuccess (200 Response) {String} email The players email address
+@apiSuccess (200 Response) {Integer} points The total point earnings for this player for the current season
+@apiErrorExample {json} Error-Response:
+HTTP/1.1 200 OK
+{
+  "errors": {
+    "email": [
+      "can't be blank"
+    ],
+    "password": [
+      "can't be blank"
+    ]
+  }
+}
+
+@apiSuccessExample {json} Success-Response:
+HTTP/1.1 200 OK
+{
+  "player": {
+    "email": "neckbeard@example.com",
+    "id": "ecb72023-12ae-4f98-8996-326df9b8b2c7",
+    "name": "neckbeard",
+    "points": 0,
+    "real_name": "Neck Beard",
+    "slack_id": "U0485M91U",
+    "notifications": true
+  }
+}
+
+@apiName UpdatePlayer
+@apiGroup Player
+=end
+    def update
+      @player = Player.where(id: params[:id], team_id: current_team.id).first
+      @player.attributes = update_params
+
+      if @player.save
+        render json: @player
+      else
+        render json: { errors: @player.errors.messages }
+      end
+    end
+
     private
 
     def player_params
       params.require(:player).permit(:email, :slack_id, :name, :real_name, :password)
+    end
+
+    def update_params
+      params.require(:player).permit(:email, :name, :real_name, :password, :notifications)
     end
 
   end
