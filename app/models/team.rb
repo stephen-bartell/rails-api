@@ -40,7 +40,7 @@ class Team < ActiveRecord::Base
 
   def current_scrum
     today = Time.now.in_time_zone(timezone).to_date
-    scrums.find_or_create_by(date: today)
+    scrums.where(date: today, team_id: id).first_or_create
   end
 
   def send_to_slack_client(data, path)

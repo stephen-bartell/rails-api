@@ -39,7 +39,7 @@ class Scrum < ActiveRecord::Base
   end
 
   def serialized_players
-    players.uniq.map do |player|
+    team.players.uniq.map do |player|
 
       # Group the entries by category
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
@@ -59,7 +59,7 @@ class Scrum < ActiveRecord::Base
 
   # FIXME: do this in a sane way
   def recipient_variables
-    Hash[ *players.uniq.collect { |v| [ v.email, {name: v.name, points: tally_points_for_player(v)} ] }.flatten ]
+    Hash[ *team.players.uniq.collect { |v| [ v.email, {name: v.name, points: tally_points_for_player(v)} ] }.flatten ]
   end
 
   def deliver_summary_email
