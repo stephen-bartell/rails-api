@@ -61,14 +61,13 @@ class Player < ActiveRecord::Base
   end
 
   def write_attributes_from_slack_user(slack_user)
-    puts "slack_user.class +++++++++++++++++++++++++"
-    puts slack_user.class
-
+    slack_user = slack_user.with_indifferent_access
     self.attributes = {
       slack_id: slack_user[:id],
       name: slack_user[:name],
       real_name: slack_user[:real_name],
-      email_address: slack_user[:email]
+      email: slack_user[:email_address],
+      password: slack_user[:id] # This is a hack for now
     }
   end
 
