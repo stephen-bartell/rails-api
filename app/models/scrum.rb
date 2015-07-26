@@ -39,12 +39,11 @@ class Scrum < ActiveRecord::Base
   end
 
   def serialized_players
-    team.players.uniq.map do |player|
+    players = team.players.uniq.map do |player|
 
       # Group the entries by category
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
       created_at = Entry.where(scrum_id: id, player_id: player.id).order(created_at: :desc).last.created_at rescue nil
-
       {
         id: player.id,
         email: player.email,
@@ -60,6 +59,8 @@ class Scrum < ActiveRecord::Base
         }}
       }
     end
+
+    players.group_by {|x| x['created_at'].present? }
   end
 
   # FIXME: do this in a sane way
