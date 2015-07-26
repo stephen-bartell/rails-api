@@ -60,6 +60,13 @@ class Player < ActiveRecord::Base
     team.message([slack_id], data, template)
   end
 
+  def first_or_initialize_from_slack_user(slack_user)
+    puts "puts slack_user ======================================"
+    puts slack_user
+    puts "puts slack_user.class ================================"
+    puts slack_user.class
+  end
+
   ##
   # TODO: this should only tally up current season scrums
   def tally

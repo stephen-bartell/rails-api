@@ -7,11 +7,13 @@ class OauthController < ApplicationController
   end
 
   def callback
+    puts "params =============================================="
+    puts params
+
     response = RestClient.post "https://slack.com/api/oauth.access", code: params[:code], client_id: ENV["SLACK_API_CLIENT_ID"], client_secret: ENV["SLACK_API_CLIENT_SECRET"]
 
-    puts "====================================================="
+    puts "response ============================================"
     puts JSON.parse(response)
-    puts "====================================================="
 
   end
 

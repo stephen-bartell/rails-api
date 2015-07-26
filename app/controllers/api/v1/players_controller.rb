@@ -125,7 +125,6 @@ HTTP/1.1 200 OK
       end
     end
 
-
 =begin
 @api {put} /players/:id Update a player
 @apiHeader (Authorization) {String} X-Auth-Token Astroscrum auth token

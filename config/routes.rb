@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     scope module: 'api' do
       namespace :v1 do
 
+        # Handle user posted from slack
+        post '/slack/join'
+
         resource :team
 
         resources :players
