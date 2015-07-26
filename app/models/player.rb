@@ -60,11 +60,13 @@ class Player < ActiveRecord::Base
     team.message([slack_id], data, template)
   end
 
-  def first_or_initialize_from_slack_user(slack_user)
-    puts "puts slack_user ======================================"
-    puts slack_user
-    puts "puts slack_user.class ================================"
-    puts slack_user.class
+  def write_attributes_from_slack_user(slack_user)
+    self.attributes = {
+      slack_id: slack_user[:id],
+      name: slack_user[:name],
+      real_name: slack_user[:real_name],
+      email_address: slack_user[:email]
+    }
   end
 
   ##
