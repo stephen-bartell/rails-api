@@ -39,24 +39,45 @@ class Scrum < ActiveRecord::Base
   end
 
   def serialized_players
-    players = team.players.uniq.map do |player|
+    filed = []
+    not_filed = []
+
+    team.players.uniq.map do |player|
 
       # Group the entries by category
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
       created_at = Entry.where(scrum_id: id, player_id: player.id).order(created_at: :desc).last.created_at rescue nil
+
+      if created_at
+        filed <<  {
+          id: player.id,
+          email: player.email,
+          slack_id: player.slack_id,
+          name: player.name,
+          real_name: player.real_name,
+          points: player.points,
+          points_today: tally_points_for_player(player),
+          created_at: created_at,
+          categories: categories.map { |category, entries| {
+            category: category,
+            entries: entries.map { |entry| entry.slice(:body, :points) }
+          }}
+        }
+      else
+        not_filed <<  {
+          id: player.id,
+          email: player.email,
+          slack_id: player.slack_id,
+          name: player.name,
+          real_name: player.real_name,
+          points: player.points,
+          points_today: tally_points_for_player(player),
+        }
+      end
+
       {
-        id: player.id,
-        email: player.email,
-        slack_id: player.slack_id,
-        name: player.name,
-        real_name: player.real_name,
-        points: player.points,
-        points_today: tally_points_for_player(player),
-        created_at: created_at,
-        categories: categories.map { |category, entries| {
-          category: category,
-          entries: entries.map { |entry| entry.slice(:body, :points) }
-        }}
+        filed: filed,
+        not_filed: not_filed
       }
     end
 
