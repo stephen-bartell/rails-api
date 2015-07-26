@@ -25,7 +25,7 @@ HTTP/1.1 200 OK
       puts "params +++++++++++++++++++++++++++++++++++++++"
       puts params
 
-      @player = Player.where(slack_id: player_params[:slack_id], team_id: current_team.id).first_or_initialize
+      @player = Player.where(slack_id: slack_user_params[:id], team_id: current_team.id).first_or_initialize
       @player.first_or_initialize_from_slack_user(slack_user_params)
 
       if @player.save
