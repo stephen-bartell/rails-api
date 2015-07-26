@@ -60,7 +60,7 @@ class Scrum < ActiveRecord::Base
       }
     end
 
-    players.group_by {|x| x['created_at'].present? }
+    players.group_by {|x| x['created_at'].nil? }
   end
 
   # FIXME: do this in a sane way
