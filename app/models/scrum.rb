@@ -43,7 +43,7 @@ class Scrum < ActiveRecord::Base
 
       # Group the entries by category
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
-      created_at = Entry.where(scrum_id: id, player_id: player.id).sort('desc :created_at').first.created_at rescue nil
+      created_at = Entry.where(scrum_id: id, player_id: player.id).order(created_at: :desc).last.created_at rescue nil
 
       {
         id: player.id,
