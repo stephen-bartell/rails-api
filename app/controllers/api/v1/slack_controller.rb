@@ -22,8 +22,11 @@ HTTP/1.1 200 OK
 @apiGroup Slack
 =end
     def join
+      puts "params +++++++++++++++++++++++++++++++++++++++"
+      puts params.class
+
       @player = Player.where(slack_id: player_params[:slack_id], team_id: current_team.id).first_or_initialize
-      @player.write_attributes_from_slack_user(slack_user_params)
+      @player.first_or_initialize_from_slack_user(slack_user_params)
 
       if @player.save
         render json: @player
@@ -35,7 +38,7 @@ HTTP/1.1 200 OK
     private
 
     def slack_user_params
-      params.require(:player).permit(:id, :name, :real_name, :email_address)
+      params.require(:player).permit!
     end
 
   end
