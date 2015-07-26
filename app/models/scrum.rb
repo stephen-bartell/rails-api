@@ -43,6 +43,7 @@ class Scrum < ActiveRecord::Base
 
       # Group the entries by category
       categories = Entry.where(scrum_id: id, player_id: player.id).group_by { |entry| entry[:category] }
+      created_at = Entry.where(scrum_id: id, player_id: player.id).sort('desc :created_at').first.created_at rescue nil
 
       {
         id: player.id,
@@ -52,7 +53,11 @@ class Scrum < ActiveRecord::Base
         real_name: player.real_name,
         points: player.points,
         points_today: tally_points_for_player(player),
-        categories: categories.map { |k,v| { category: k, entries: v.map { |entry| entry.slice(:body, :points) } }}
+        created_at: created_at,
+        categories: categories.map { |category, entries| {
+          category: category,
+          entries: entries.map { |entry| entry.slice(:body, :points) }
+        }}
       }
     end
   end
