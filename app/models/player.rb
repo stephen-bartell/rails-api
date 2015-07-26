@@ -61,6 +61,9 @@ class Player < ActiveRecord::Base
   end
 
   def write_attributes_from_slack_user(slack_user)
+    puts "slack_user.class +++++++++++++++++++++++++"
+    puts slack_user.class
+
     self.attributes = {
       slack_id: slack_user[:id],
       name: slack_user[:name],
