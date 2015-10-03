@@ -50,6 +50,9 @@ class Team < ActiveRecord::Base
     request = Net::HTTP::Post.new(path, {'Content-Type' =>'application/json'})
     request.body = data.to_json
 
+    puts "request =============================="
+    puts request
+
     response = http.request(request)
   end
 
