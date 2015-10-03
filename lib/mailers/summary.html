@@ -1,22 +1,23 @@
 <html>
   <p>Hey %recipient% today you earned <strong>%recipient.points%</strong> points!</p>
 
-  {{#each players}}
-  {{#each filed}}
+  {{#players}}
+  {{#filed}}
   <strong>{{real_name}}</strong> ({{points}})<br>
   <ul>
   {{#categories}}
     <li>{{category}}: {{#entries}}{{body}}; {{/entries}}</li>
-  {{/each}}
+  {{/categories}}
   </ul>
+  {{/filed}}
   <br>
 
   <p>Not filed:</p>
-  {{#each filed}}
+  {{#filed}}
   <ul>
     <li><strong>{{real_name}}</strong> ({{points}})</li>
   </ul>
-  {{/each}}
-  {{/each}}
+  {{/filed}}
+  {{/players}}
   <br>
 </html>
