@@ -103,7 +103,7 @@ class Team < ActiveRecord::Base
     }
   end
 
-  def annouce_summary
+  def announce_summary
     template_path = Rails.root.join('lib/messages/summary.text')
     announce("general", summary_attrs, File.read(template_path))
   end
@@ -112,8 +112,8 @@ class Team < ActiveRecord::Base
     # Deliver email to team with summary
     current_scrum.deliver_summary_email
 
-    # Annouce summary via Slack
-    annouce_summary
+    # Announce summary via Slack
+    announce_summary
   end
 
   def next_run_for_event(event_name)
