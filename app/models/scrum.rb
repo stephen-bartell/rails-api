@@ -38,6 +38,15 @@ class Scrum < ActiveRecord::Base
     entries.where(player_id: player.id).sum(:points)
   end
 
+  def summary_attrs
+    {
+      id: id,
+      date: date.strftime("%A %B #{date.day.ordinalize}"),
+      points: points,
+      players: serialized_players
+    }
+  end
+
   def serialized_players
     filed = []
     not_filed = []

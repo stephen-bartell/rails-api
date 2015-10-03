@@ -97,18 +97,14 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def summary_attrs
-    {
-      id: current_scrum.id,
-      date: current_scrum.date.strftime("%A %B #{time.day.ordinalize}"),
-      points: current_scrum.points,
-      players: current_scrum.serialized_players
-    }
-  end
-
   def announce_summary
-    template_path = Rails.root.join('lib/messages/summary.text')
-    announce("general", summary_attrs, File.read(template_path))
+    if current_scrum.players.soze > 0
+      template_path = Rails.root.join('lib/messages/summary.text')
+      announce("general", current_scrum.summary_attrs, File.read(template_path))
+    else
+      template_path = Rails.root.join('lib/messages/summary_for_failed_scrum.text')
+      announce("general", current_scrum.summary_attrs, File.read(template_path))
+    end
   end
 
   def summary

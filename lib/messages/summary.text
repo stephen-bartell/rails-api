@@ -6,3 +6,8 @@ Team summary for {{date}}:
 {{/each}}
 
 {{/each}}
+
+Not filed:
+{{#each players.not_filed}}
+*{{real_name}}* ({{points}})
+{{/each}}
