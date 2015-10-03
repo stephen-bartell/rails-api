@@ -94,25 +94,23 @@ class Team < ActiveRecord::Base
     end
   end
 
-  def summary
-    # send emails
-    begin
-      current_scrum.deliver_summary_email
-    rescue
-      puts "failed to deliver scrum summary email"
-    end
-
-    # message players
-    # TODO: should take an array of channels
-    scrum = {
+  def summary_attrs
+    {
       id: current_scrum.id,
       date: current_scrum.date,
       points: current_scrum.points,
       players: current_scrum.serialized_players
     }
+  end
 
+  def annouce_summary
     template_path = Rails.root.join('lib/messages/summary.text')
-    announce("general", scrum, File.read(template_path))
+    announce("general", summary_attrs, File.read(template_path))
+  end
+
+  def summary
+    current_scrum.deliver_summary_email
+    current_scrum.annouce_summary
   end
 
   def next_run_for_event(event_name)
