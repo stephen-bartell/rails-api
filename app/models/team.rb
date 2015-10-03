@@ -98,7 +98,7 @@ class Team < ActiveRecord::Base
   end
 
   def announce_summary
-    if current_scrum.players.soze > 0
+    if current_scrum.players.size > 0
       template_path = Rails.root.join('lib/messages/summary.text')
       announce("general", current_scrum.summary_attrs, File.read(template_path))
     else
