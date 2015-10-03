@@ -1,15 +1,16 @@
 Hey %recipient.name% today you earned %recipient.points% points!
 
 Team summary for {{date}}:
-{{#players.filed}}
+{{#each players}}
+{{#each filed}}
 *{{real_name}}* ({{points}})
-{{#categories}}
+{{#each categories}}
   {{category}}: {{#entries}}{{body}}; {{/entries}}
-{{/categories}}
-
-{{/players}}
+{{/each}}
+{{/each}}
 
 Not filed:
-{{#players.not_filed}}
+{{#each not_filed}}
 *{{real_name}}* ({{points}})
-{{/players}}
+{{/each}}
+{{/each}}
