@@ -51,7 +51,7 @@ class Team < ActiveRecord::Base
     request.body = data.to_json
 
     puts "request =============================="
-    puts request.body 
+    puts request.body
 
     response = http.request(request)
   end
@@ -100,7 +100,7 @@ class Team < ActiveRecord::Base
   def summary_attrs
     {
       id: current_scrum.id,
-      date: current_scrum.date,
+      date: current_scrum.date.strftime("%A %B #{time.day.ordinalize}"),
       points: current_scrum.points,
       players: current_scrum.serialized_players
     }
