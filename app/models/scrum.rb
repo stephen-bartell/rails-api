@@ -110,8 +110,8 @@ class Scrum < ActiveRecord::Base
           "from"     => "Scrum Bot <bot@astroscrum.com>",
           "to"       => to.join(','),
           "subject"  => "[Astroscrum] Nobody on your team did their scrum today ಠ_ಠ",
-          "text"     => "ಠ_ಠ",
-          "html"     => "ಠ_ಠ",
+          "text"     => "It looks like nobody on your team did their scrum today.",
+          "html"     => "It looks like nobody on your team did their scrum today.",
           "recipient-variables" => recipient_variables.to_json
     end
 

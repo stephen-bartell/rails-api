@@ -1,5 +1,5 @@
 Team summary for {{date}}:
-{{#each players}}
+{{#each players.filed}}
 *{{real_name}}* ({{points}})
 {{#each categories}}
   {{category}}: {{#each entries}}{{body}}; {{/each}}
