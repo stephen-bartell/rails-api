@@ -110,7 +110,7 @@ class Scrum < ActiveRecord::Base
       RestClient.post ENV['MAILGUN_URL'],
           "from"     => "Scrum Bot <bot@astroscrum.com>",
           "to"       => to.join(','),
-          "subject"  => "[Astroscrum] Summary for team #{team.name} - #{date}",
+          "subject"  => "[Astroscrum] Summary for #{team.name} - #{date.strftime("%A %B #{date.day.ordinalize}")}",
           "text"     => text,
           "html"     => html,
           "recipient-variables" => recipient_variables.to_json

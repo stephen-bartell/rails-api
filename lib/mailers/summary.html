@@ -10,12 +10,11 @@
   {{/categories}}
   </ul>
   {{/filed}}
-  <br>
 
   <p>Not filed:</p>
-  {{#filed}}
+  <strong>{{#not_filed}}</strong>
   <ul>
-    <li><strong>{{real_name}}</strong> ({{points}})</li>
+    <li>{{real_name}} ({{points}})</li>
   </ul>
   {{/filed}}
   {{/players}}
