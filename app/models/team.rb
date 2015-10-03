@@ -109,8 +109,11 @@ class Team < ActiveRecord::Base
   end
 
   def summary
+    # Deliver email to team with summary
     current_scrum.deliver_summary_email
-    current_scrum.annouce_summary
+
+    # Annouce summary via Slack
+    annouce_summary
   end
 
   def next_run_for_event(event_name)
