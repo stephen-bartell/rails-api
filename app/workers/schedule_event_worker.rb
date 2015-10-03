@@ -1,4 +1,3 @@
-
 class ScheduleEventWorker
   include Sidekiq::Worker
 
@@ -29,4 +28,3 @@ class ScheduleEventWorker
   end
 
 end
-
