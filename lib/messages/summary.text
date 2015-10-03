@@ -1,5 +1,5 @@
 Team summary for {{date}}:
-{{#each players.filed}}
+{{#players.filed}}
 *{{real_name}}* ({{points}})
 {{#each categories}}
   {{category}}: {{#each entries}}{{body}}; {{/each}}
@@ -8,6 +8,6 @@ Team summary for {{date}}:
 {{/each}}
 
 Not filed:
-{{#each players.not_filed}}
+{{#players.not_filed}}
 *{{real_name}}* ({{points}})
 {{/each}}
