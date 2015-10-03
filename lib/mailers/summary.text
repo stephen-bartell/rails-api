@@ -4,7 +4,7 @@ Team summary for {{date}}:
 {{#players}}
 {{#filed}}
 *{{real_name}}* ({{points}})
-{{#each categories}}
+{{#categories}}
   {{category}}: {{#entries}}{{body}}; {{/entries}}
 {{/categories}}
 {{/filed}}
