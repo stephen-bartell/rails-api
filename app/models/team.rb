@@ -51,7 +51,7 @@ class Team < ActiveRecord::Base
     request.body = data.to_json
 
     puts "request =============================="
-    puts request
+    puts request.request.body 
 
     response = http.request(request)
   end
