@@ -12,7 +12,14 @@
 
 class ScrumSerializer < ActiveModel::Serializer
 
-  attributes :id, :date, :points, :players
+  attributes :id,
+    :date,
+    :points,
+    :players
+
+  def date
+    object.date.strftime("%A %B #{object.date.day.ordinalize}")
+  end
 
   def players
     object.serialized_players

@@ -1,5 +1,6 @@
 class PlayerScrumSerializer < ActiveModel::Serializer
 
-  attributes :name, :entries
+  attributes :name,
+    :entries
 
 end
