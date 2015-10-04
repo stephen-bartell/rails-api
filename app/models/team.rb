@@ -71,7 +71,7 @@ class Team < ActiveRecord::Base
   # Send message to every player, excluding ones that have notifications disabled
   def message(players, data = {}, template)
     data = {
-      players: self.players.where(notifications: false, id: players).map(&:slack_id),
+      players: self.players.where(notifications: true, id: players).map(&:slack_id),
       data: data,
       template: template
     }
