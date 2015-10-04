@@ -13,6 +13,7 @@
 #  points        :integer          default(0)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  notifications :boolean          default(TRUE)
 #
 
 class PlayerSerializer < ActiveModel::Serializer

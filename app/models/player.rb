@@ -13,6 +13,7 @@
 #  points        :integer          default(0)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  notifications :boolean          default(TRUE)
 #
 
 class Player < ActiveRecord::Base
@@ -75,6 +76,10 @@ class Player < ActiveRecord::Base
   # TODO: this should only tally up current season scrums
   def tally
     update_column :points, entries.sum(:points)
+  end
+
+  def deliver_notifications?
+    notifications && team.deliver_notifications?
   end
 
 end

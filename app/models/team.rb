@@ -2,21 +2,22 @@
 #
 # Table name: teams
 #
-#  id          :uuid             not null, primary key
-#  name        :string
-#  auth_token  :string
-#  points      :integer          default(0)
-#  slack_id    :string
-#  bot_url     :string
-#  prompt_at   :string
-#  prompt_jid  :string
-#  remind_at   :string
-#  remind_jid  :string
-#  summary_at  :string
-#  summary_jid :string
-#  timezone    :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                  :uuid             not null, primary key
+#  name                :string
+#  auth_token          :string
+#  points              :integer          default(0)
+#  slack_id            :string
+#  bot_url             :string
+#  prompt_at           :string
+#  prompt_jid          :string
+#  remind_at           :string
+#  remind_jid          :string
+#  summary_at          :string
+#  summary_jid         :string
+#  timezone            :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  do_not_disturb_days :text             default(["6", "7"]), is an Array
 #
 
 require 'sidekiq/api'
@@ -66,9 +67,11 @@ class Team < ActiveRecord::Base
     send_to_slack_client(data, '/hubot/astroscrum/announce')
   end
 
+  ##
+  # Send message to every player, excluding ones that have notifications disabled
   def message(players, data = {}, template)
     data = {
-      players: players,
+      players: players - players.where(notifications: false).map(&:slack_id),
       data: data,
       template: template
     }
@@ -150,6 +153,10 @@ class Team < ActiveRecord::Base
     ['prompt', 'remind', 'summary'].each do |event_name|
       unqueue_event(event_name)
     end
+  end
+
+  def deliver_notifications?
+    Date.today.wday.in? team.do_not_disturb_days.map(&:to_i)
   end
 
 end
