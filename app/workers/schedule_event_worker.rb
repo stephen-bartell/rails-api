@@ -15,7 +15,6 @@ class ScheduleEventWorker
 
     # Requeue event
     team.queue_event(event_name)
-
   end
 
   # Check to see if there is a cancelled-jid key for this job
