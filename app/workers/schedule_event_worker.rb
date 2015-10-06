@@ -8,7 +8,7 @@ class ScheduleEventWorker
 
     # Find team
     team = Team.find team_id
-    return if team.deliver_notifications?
+    # return if team.deliver_notifications?
 
     # run method, ie, team.prompt
     team.send(event_name)
@@ -25,11 +25,6 @@ class ScheduleEventWorker
   # Set a cancelled key so that the job won't execute anything when run
   def self.cancel!(jid)
     Sidekiq.redis { |c| c.setex("cancelled-#{jid}", 86400, 1) }
-  end
-
-  # Is this event on a do not do_not_disturb_day?
-  def do_not_disturb_day?
-    ActiveSupport::TimeZone.new(team.timezone).now.wday
   end
 
 end
